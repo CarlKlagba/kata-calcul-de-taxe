@@ -17,6 +17,18 @@ public final class Facture {
     }
 
 
+    public List<ProduitTTC> getProduitsTtc() {
+        return produitsTtc;
+    }
+
+    public BigDecimal getTaxes() {
+        return taxes;
+    }
+
+    public BigDecimal getPrixTTc() {
+        return prixTTc;
+    }
+
     public static class Builder {
         List<ProduitTTC> produitsTTC = new ArrayList<>();
         List<BigDecimal> listOfTaxes =  new ArrayList<>();

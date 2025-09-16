@@ -31,10 +31,7 @@ public final class ProduitTTC {
 
     @Override
     public String toString() {
-        return "ProduitTTC{" +
-                "nom='" + nom + '\'' +
-                ", prix=" + prix +
-                '}';
+        return  nom + ": " + prix +" ";
     }
 
 
