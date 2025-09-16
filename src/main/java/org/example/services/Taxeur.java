@@ -12,7 +12,7 @@ public class Taxeur {
     private static final BigDecimal TAXES_IMPORT = new BigDecimal("0.05");
     private static final BigDecimal INCREMENT_SUPERIEURS = new BigDecimal("0.05");
 
-    public BigDecimal taxe(Produit produit) {
+    public BigDecimal determineTaxes(Produit produit) {
         var pourcentage = BigDecimal.ZERO;
         if(produit instanceof ProduitTaxe) {
             pourcentage = TAXES;

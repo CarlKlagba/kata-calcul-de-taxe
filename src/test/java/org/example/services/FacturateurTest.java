@@ -30,13 +30,13 @@ class FacturateurTest {
         Produit cdMusical = new ProduitTaxe("CD musical", new BigDecimal("14.99"));
         Commande commande = new Commande(List.of(cdMusical));
 
-        when(taxeur.taxe(any())).thenReturn(new BigDecimal("1.50"));
+        when(taxeur.determineTaxes(any())).thenReturn(new BigDecimal("1.50"));
 
         facturateur.facture(commande);
 
         ProduitTTC cdMusicalTTC = new ProduitTTC("CD musical", new BigDecimal("16.49"));
 
-        verify(taxeur, times(1)).taxe(any());
+        verify(taxeur, times(1)).determineTaxes(any());
 
         ArgumentCaptor<Facture> factureCaptor = ArgumentCaptor.forClass(Facture.class);
         verify(facturePrinter, times(1)).printFacture(factureCaptor.capture());
@@ -55,7 +55,7 @@ class FacturateurTest {
         Produit produit3 = new ProduitTaxe("produit3", new BigDecimal("10.00"));
         Commande commande = new Commande(List.of(produit1, produit2, produit3));
 
-        when(taxeur.taxe(any())).thenReturn(new BigDecimal("1.00"));
+        when(taxeur.determineTaxes(any())).thenReturn(new BigDecimal("1.00"));
 
         facturateur.facture(commande);
 
@@ -63,7 +63,7 @@ class FacturateurTest {
         ProduitTTC produit2TTC = new ProduitTTC("produit2", new BigDecimal("11.00"));
         ProduitTTC produit3TTC = new ProduitTTC("produit3", new BigDecimal("11.00"));
 
-        verify(taxeur, times(3)).taxe(any());
+        verify(taxeur, times(3)).determineTaxes(any());
 
         ArgumentCaptor<Facture> factureCaptor = ArgumentCaptor.forClass(Facture.class);
         verify(facturePrinter, times(1)).printFacture(factureCaptor.capture());
