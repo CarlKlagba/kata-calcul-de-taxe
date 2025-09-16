@@ -4,6 +4,7 @@ import org.example.model.*;
 import org.example.port.FacturePrinter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -34,10 +35,17 @@ class FacturateurTest {
         facturateur.facture(commande);
 
         ProduitTTC cdMusicalTTC = new ProduitTTC("CD musical", new BigDecimal("16.49"));
-        Facture expectedFacture = new Facture(List.of(cdMusicalTTC), new BigDecimal("1.50"), new BigDecimal("16.49"));
 
         verify(taxeur, times(1)).taxe(any());
-        verify(facturePrinter, times(1)).printFacture(expectedFacture);
+
+        ArgumentCaptor<Facture> factureCaptor = ArgumentCaptor.forClass(Facture.class);
+        verify(facturePrinter, times(1)).printFacture(factureCaptor.capture());
+
+        Facture capturedFacture = factureCaptor.getValue();
+
+        assertEquals(new BigDecimal("1.50"), capturedFacture.getTaxes());
+        assertEquals(new BigDecimal("16.49"), capturedFacture.getPrixTTc());
+        assertEquals(List.of(cdMusicalTTC), capturedFacture.getProduitsTtc());
     }
 
     @Test
@@ -54,13 +62,17 @@ class FacturateurTest {
         ProduitTTC produit1TTC = new ProduitTTC("produit1", new BigDecimal("11.00"));
         ProduitTTC produit2TTC = new ProduitTTC("produit2", new BigDecimal("11.00"));
         ProduitTTC produit3TTC = new ProduitTTC("produit3", new BigDecimal("11.00"));
-        Facture expectedFacture = new Facture(
-                List.of(produit1TTC, produit2TTC, produit3TTC),
-                new BigDecimal("3.00"),
-                new BigDecimal("33.00"));
 
         verify(taxeur, times(3)).taxe(any());
-        verify(facturePrinter, times(1)).printFacture(expectedFacture);
+
+        ArgumentCaptor<Facture> factureCaptor = ArgumentCaptor.forClass(Facture.class);
+        verify(facturePrinter, times(1)).printFacture(factureCaptor.capture());
+
+        Facture capturedFacture = factureCaptor.getValue();
+
+        assertEquals(new BigDecimal("3.00"), capturedFacture.getTaxes());
+        assertEquals(new BigDecimal("33.00"), capturedFacture.getPrixTTc());
+        assertEquals(List.of(produit1TTC, produit2TTC, produit3TTC), capturedFacture.getProduitsTtc());
     }
 
 }

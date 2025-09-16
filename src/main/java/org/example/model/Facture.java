@@ -10,7 +10,7 @@ public final class Facture {
     private final BigDecimal taxes;
     private final BigDecimal prixTTc;
 
-    public Facture(List<ProduitTTC> produitsTtc, BigDecimal taxes, BigDecimal prixTTc) {
+    private Facture(List<ProduitTTC> produitsTtc, BigDecimal taxes, BigDecimal prixTTc) {
         this.produitsTtc = produitsTtc;
         this.taxes = taxes;
         this.prixTTc = prixTTc;
