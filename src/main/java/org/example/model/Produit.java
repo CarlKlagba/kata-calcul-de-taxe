@@ -3,7 +3,7 @@ package org.example.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public sealed abstract class Produit permits ProduitExempt, ProduitTaxe  {
+public sealed abstract class Produit permits ProduitExempt, ProduitTaxe  { //Utiliser enums?
     private final String nom;
     private final BigDecimal prix;
     private final boolean importe;
