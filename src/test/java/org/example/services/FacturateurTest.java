@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.example.model.TypeProduit.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -26,7 +27,7 @@ class FacturateurTest {
     @Test
     void quand_je_facture_une_commande_a_1_produit_je_facture_1_produit_avec_les_taxes() {
 
-        Produit cdMusical = new ProduitTaxe("CD musical", new BigDecimal("14.99"));
+        Produit cdMusical = new Produit("CD musical", new BigDecimal("14.99"), Autre);
         Commande commande = new Commande(List.of(cdMusical));
 
         when(taxeur.taxe(any())).thenReturn(new BigDecimal("1.50"));
@@ -42,9 +43,9 @@ class FacturateurTest {
 
     @Test
     void quand_je_facture_une_commande_a_3_produits_je_facture_3_produits_avec_les_taxes_appliquées() {
-        Produit produit1 = new ProduitTaxe("produit1", new BigDecimal("10.00"));
-        Produit produit2 = new ProduitTaxe("produit2", new BigDecimal("10.00"));
-        Produit produit3 = new ProduitTaxe("produit3", new BigDecimal("10.00"));
+        Produit produit1 = new Produit("produit1", new BigDecimal("10.00"), Autre);
+        Produit produit2 = new Produit("produit2", new BigDecimal("10.00"), Autre);
+        Produit produit3 = new Produit("produit3", new BigDecimal("10.00"), Autre);
         Commande commande = new Commande(List.of(produit1, produit2, produit3));
 
         when(taxeur.taxe(any())).thenReturn(new BigDecimal("1.00"));

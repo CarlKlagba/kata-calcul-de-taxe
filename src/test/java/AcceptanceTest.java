@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static java.lang.Boolean.*;
+import static org.example.model.TypeProduit.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -25,9 +26,9 @@ public class AcceptanceTest {
 
     @Test
     public void accepteTest_input1() {
-        Produit livre = new ProduitExempt("livre", new BigDecimal("12.49"));
-        Produit cdMusical = new ProduitTaxe("CD musical", new BigDecimal("14.99"));
-        Produit chocolat = new ProduitExempt("barre de chocolat", new BigDecimal("0.85"));
+        Produit livre = new Produit("livre", new BigDecimal("12.49"), Livre);
+        Produit cdMusical = new Produit("CD musical", new BigDecimal("14.99"), Autre);
+        Produit chocolat = new Produit("barre de chocolat", new BigDecimal("0.85"), Nourriture);
         Commande commande = new Commande(List.of(livre, cdMusical, chocolat));
 
         facturateur.facture(commande);
@@ -45,8 +46,8 @@ public class AcceptanceTest {
 
     @Test
     public void accepteTest_input2() {
-        Produit parfumImporte = new ProduitTaxe("flacon de parfum importé", new BigDecimal("47.50"), TRUE);
-        Produit chocolatImportees = new ProduitExempt("boîte de chocolats importée", new BigDecimal("10.00"), TRUE);
+        Produit parfumImporte = new Produit("flacon de parfum importé", new BigDecimal("47.50"), Autre, TRUE);
+        Produit chocolatImportees = new Produit("boîte de chocolats importée", new BigDecimal("10.00"), Nourriture, TRUE);
         Commande commande = new Commande(List.of(parfumImporte, chocolatImportees));
 
         facturateur.facture(commande);
@@ -61,10 +62,10 @@ public class AcceptanceTest {
 
     @Test
     public void accepteTest_input3() {
-        Produit parfumImporte = new ProduitTaxe("flacon de parfum importé", new BigDecimal("27.99"), TRUE);
-        Produit parfum = new ProduitTaxe("flacon de parfum", new BigDecimal("18.99"));
-        Produit pilules = new ProduitExempt("boite de pilules contre la migraine", new BigDecimal("9.75"));
-        Produit chocolatImportees = new ProduitExempt("chocolats importées", new BigDecimal("11.25"), TRUE);
+        Produit parfumImporte = new Produit("flacon de parfum importé", new BigDecimal("27.99"), Autre, TRUE);
+        Produit parfum = new Produit("flacon de parfum", new BigDecimal("18.99"), Autre);
+        Produit pilules = new Produit("boite de pilules contre la migraine", new BigDecimal("9.75"), Medicament);
+        Produit chocolatImportees = new Produit("chocolats importées", new BigDecimal("11.25"), Nourriture, TRUE);
         Commande commande = new Commande(List.of(parfumImporte, parfum, pilules, chocolatImportees));
 
         facturateur.facture(commande);

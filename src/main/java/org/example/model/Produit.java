@@ -3,20 +3,25 @@ package org.example.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public sealed abstract class Produit permits ProduitExempt, ProduitTaxe  {
+import static org.example.model.TypeProduit.*;
+
+public class Produit {
     private final String nom;
     private final BigDecimal prix;
+    private final TypeProduit type;
     private final boolean importe;
 
-    public Produit(String nom, BigDecimal prix) {
+    public Produit(String nom, BigDecimal prix, TypeProduit type) {
         this.nom = nom;
         this.prix = prix;
+        this.type = type;
         this.importe = false;
     }
 
-    public Produit(String nom, BigDecimal prix, boolean importe) {
+    public Produit(String nom, BigDecimal prix, TypeProduit type, boolean importe) {
         this.nom = nom;
         this.prix = prix;
+        this.type = type;
         this.importe = importe;
     }
 
@@ -26,6 +31,10 @@ public sealed abstract class Produit permits ProduitExempt, ProduitTaxe  {
 
     public boolean isImporte() {
         return importe;
+    }
+
+    public boolean isTaxe(){
+        return type == Autre;
     }
 
     public ProduitTTC appliqueTaxes(BigDecimal taxe) {
