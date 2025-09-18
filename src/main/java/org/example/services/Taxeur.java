@@ -1,7 +1,6 @@
 package org.example.services;
 
 import org.example.model.Produit;
-import org.example.model.ProduitTaxe;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,7 +13,7 @@ public class Taxeur {
 
     public BigDecimal determineTaxes(Produit produit) {
         var pourcentage = BigDecimal.ZERO;
-        if(produit instanceof ProduitTaxe) {
+        if(produit.isTaxe()) {
             pourcentage = TAXES;
         }
         if(produit.isImporte()){
