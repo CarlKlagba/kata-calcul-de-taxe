@@ -19,7 +19,7 @@ public class Facturateur {
         Facture.Builder factureBuilder = new Facture.Builder();
 
         commande.produits().forEach(p -> {
-            BigDecimal taxes = taxeur.taxe(p);
+            BigDecimal taxes = taxeur.determineTaxes(p);
             factureBuilder.ajouteProduitAvecTaxe(p, taxes);
         });
 

@@ -7,13 +7,17 @@ import java.math.RoundingMode;
 
 public class Taxeur {
 
-    public BigDecimal taxe(Produit produit) {
-        var pourcentage = new BigDecimal("0.0");
+    private static final BigDecimal TAXES = new BigDecimal("0.1");
+    private static final BigDecimal TAXES_IMPORT = new BigDecimal("0.05");
+    private static final BigDecimal INCREMENT_SUPERIEURS = new BigDecimal("0.05");
+
+    public BigDecimal determineTaxes(Produit produit) {
+        var pourcentage = BigDecimal.ZERO;
         if(produit.isTaxe()) {
-            pourcentage = new BigDecimal("0.1");
+            pourcentage = TAXES;
         }
         if(produit.isImporte()){
-            pourcentage = pourcentage.add(new BigDecimal("0.05"));
+            pourcentage = pourcentage.add(TAXES_IMPORT);
         }
 
         BigDecimal taxes = produit.getPrix().multiply(pourcentage);
@@ -21,7 +25,7 @@ public class Taxeur {
     }
 
     private BigDecimal arrondi(BigDecimal taxes) {
-        BigDecimal increment = new BigDecimal("0.05");
+        BigDecimal increment = INCREMENT_SUPERIEURS;
         return taxes.divide(increment, 0, RoundingMode.UP)
                 .multiply(increment)
                 .setScale(2, RoundingMode.HALF_UP);
